@@ -13,6 +13,10 @@ def getAllImages():
     Esta función debe obtener los datos desde transport, transformarlos en Cards usando 
     translator y retornar una lista de objetos Card.
     """
+    request = transport.getAllImages()
+    card = translator.fromRequestIntoCard(request)
+    return card
+
     pass
 
 def filterByCharacter(name):
