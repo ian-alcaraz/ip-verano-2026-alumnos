@@ -1,3 +1,4 @@
+
 # capa de vista/presentación
 
 from django.shortcuts import redirect, render
@@ -16,9 +17,10 @@ def home(request):
     y también el listado de favoritos del usuario, para luego enviarlo al template 'home.html'.
     Recordar que los listados deben pasarse en el contexto con las claves 'images' y 'favourite_list'.
     """
-    images = []
-    favourite_list = []
+    images = services.getAllImages()
+    favourite_list = [  ]
 
+    
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
 
 def search(request):
@@ -29,6 +31,17 @@ def search(request):
     Se debe obtener el parámetro 'query' desde el POST, filtrar las imágenes según el nombre
     y renderizar 'home.html' con los resultados. Si no se ingresa nada, redirigir a 'home'.
     """
+    query = request.POST.get('query', '') # busca el query 
+
+    if query !='': # si el query es distinto que vacio, entra en el if 
+        images = services.filterByCharacter(query) # filtra el por el nombre 
+
+        favourite_list = []
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # devuelve el request
+    else:
+        return redirect('home') # si no escribio nada, lo devuelve al home 
+
+
     pass
 
 def filter_by_status(request):
@@ -39,6 +52,14 @@ def filter_by_status(request):
     Se debe obtener el parámetro 'status' desde el POST, filtrar las imágenes según ese estado
     y renderizar 'home.html' con los resultados. Si no hay estado, redirigir a 'home'.
     """
+
+    status = request.POST.get('status', '') # busca el estado
+    if status != '': # si el estado es distinto a vacio entra en el condicional
+        images = services.filterByStatus(status)# filtra por el estado
+        favourite_list=[]
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # retorna el resultado
+    else:
+        return redirect('home') # si esta vacio te devuelve a home 
     pass
 
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
@@ -66,4 +87,5 @@ def deleteFavourite(request):
 @login_required
 def exit(request):
     logout(request)
+
     return redirect('home')
