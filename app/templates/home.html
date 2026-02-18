@@ -63,7 +63,12 @@
                             <h5 class="card-title text-center">{{ img.name }}</h5>
 
                             <div class="alert alert-warning p-2 text-center">
-                                "{{ img.phrases.0|truncatewords:5 }}"
+                                <!-- Mostrar una frase aleatoria del personaje o una cadena vacía si no tiene frases -->
+                                {% if img.phrases %}
+                                    "{{ img.phrases|random }}"
+                                {% else %}
+                                    ""
+                                {% endif %}
                             </div>
 
                             <p class="card-text mb-1">
