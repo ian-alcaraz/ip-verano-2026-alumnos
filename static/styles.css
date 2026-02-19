@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Simpsons';
+    src: url('/static/fonts/simpsonfont.ttf') format('truetype');
+}
+
 body {
     color: #566787;
     background: #f5f5f5;
@@ -139,4 +144,115 @@ table.table td i {
     float: left;
     margin-top: 6px;
     font-size: 95%;
+}
+
+.navbar {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+
+main h1 {
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 25px;
+}
+
+.card {
+    border-radius: 14px;
+    border-width: 2px; /* deja visible el color */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.card img {
+    transition: transform 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+form input {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+form button {
+    border-radius: 10px;
+}
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.03);
+}
+
+body {
+    background-image: url("/static/images/fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: -1;
+}
+
+main h1 {
+    font-family: 'Simpsons', cursive;
+    color: #ffd90f;
+    text-shadow: 2px 2px 0 #000;
+}
+
+h2 {
+    color: yellow;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.bienvenida-texto {
+    color: yellow;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(6px);
+}
+
+.navbar a,
+.navbar-brand {
+    color: #ffd90f !important;
+    font-weight: 600;
+}
+
+.navbar a:hover {
+    color: white !important;
+}
+
+h2.text-center {
+    padding-top: 150px;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.bienvenida-texto.text-center {
+    padding-top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
 }
