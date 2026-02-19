@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from . import views
 
 urlpatterns = [
     path('', views.index_page, name='index-page'),
@@ -13,6 +14,8 @@ urlpatterns = [
     path('favourites/', views.getAllFavouritesByUser, name='favoritos'),
     path('favourites/add/', views.saveFavourite, name='agregar-favorito'),
     path('favourites/delete/', views.deleteFavourite, name='borrar-favorito'),
+
+    path('register/', views.registrar_usuario, name ='register'),
 
     path('exit/', views.exit, name='exit'),
 ]

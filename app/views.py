@@ -5,7 +5,9 @@ from django.shortcuts import redirect, render
 from .layers.services import services
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
+from .forms import registroUsuarioForm
+from django.conf import settings
+from django.core.mail import send_mail
 def index_page(request):
     return render(request, 'index.html')
 
@@ -61,6 +63,24 @@ def filter_by_status(request):
     else:
         return redirect('home') # si esta vacio te devuelve a home 
     pass
+
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = registroUsuarioForm(request.POST) # llenamos el formulario con los datos 
+        if form.is_valid(): 
+            user = form.save()# se crea el usuario en la db
+            username = form.cleaned_data.get('username') #obtengo los datos para el mensaje
+            password = form.cleaned_data.get('password1') # 
+            email_destinatario = form.cleaned_data.get('email')
+            subject = 'Bienvenido al TP IP'
+            message = f'Hola{user.first_name},\n\nTu registro fue exitoso.\nUsuario {username}\nContrasenia: {password}'
+            #email_from = settings.EMAIL_HOST_USER
+            #recipient_list =[email_destinatario]
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [email_destinatario])
+            return redirect('login')
+    else:
+        form=registroUsuarioForm()
+    return render(request, 'registration/register.html', {'form':form})    
 
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
