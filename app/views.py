@@ -20,7 +20,9 @@ def home(request):
     Recordar que los listados deben pasarse en el contexto con las claves 'images' y 'favourite_list'.
     """
     images = services.getAllImages()
-    favourite_list = [  ]
+    fav_object = services.getAllFavourites(request)
+    favourite_list = [f.name for f in fav_object] # creamos una lista de nombres
+    #favourite_list = services.getAllFavourites(request) if request.user.is_authenticated else [] # si esta logueado traemos los favs
 
     
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -38,7 +40,8 @@ def search(request):
     if query !='': # si el query es distinto que vacio, entra en el if 
         images = services.filterByCharacter(query) # filtra el por el nombre 
 
-        favourite_list = []
+        favourite_list = services.getAllFavourites(request) if request.user.is_authenticated else [] # si esta logueado traemos los favs
+
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # devuelve el request
     else:
         return redirect('home') # si no escribio nada, lo devuelve al home 
@@ -58,7 +61,8 @@ def filter_by_status(request):
     status = request.POST.get('status', '') # busca el estado
     if status != '': # si el estado es distinto a vacio entra en el condicional
         images = services.filterByStatus(status)# filtra por el estado
-        favourite_list=[]
+        favourite_list = services.getAllFavourites(request) if request.user.is_authenticated else [] # si esta logueado traemos los favs
+
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # retorna el resultado
     else:
         return redirect('home') # si esta vacio te devuelve a home 
@@ -88,6 +92,10 @@ def getAllFavouritesByUser(request):
     """
     Obtiene todos los favoritos del usuario autenticado.
     """
+
+    favourite_list = services.getAllFavourites(request) # obtenemos los favoritos
+   
+    return render(request, 'favourites.html', {'favourite_list': favourite_list}) # los retornamos
     pass
 
 @login_required
@@ -95,6 +103,10 @@ def saveFavourite(request):
     """
     Guarda un personaje como favorito.
     """
+
+    if request.method == 'POST':
+        services.saveFavourite(request) # sevices guarda el fav
+    return redirect('home')    #retornamos home 
     pass
 
 @login_required
@@ -102,6 +114,10 @@ def deleteFavourite(request):
     """
     Elimina un favorito del usuario.
     """
+
+    if request.method == 'POST':
+        services.deleteFavourite(request)
+    return redirect('favoritos')    
     pass
 
 @login_required

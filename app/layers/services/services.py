@@ -64,6 +64,10 @@ def saveFavourite(request):
     Se deben convertir los datos del request en una Card usando el translator,
     asignarle el usuario actual, y guardarla en el repositorio.
     """
+
+    fav = translator.fromRequestIntoCard(request.POST) #convertimos los datos del POST a una card
+    fav.user = request.user # se la asignamos al usuario
+    return repositories.saveFavourite(fav)
     pass
 
 def getAllFavourites(request):
@@ -73,6 +77,16 @@ def getAllFavourites(request):
     Si el usuario está autenticado, se deben obtener sus favoritos desde el repositorio,
     transformarlos en Cards usando translator y retornar la lista. Si no está autenticado, se retorna una lista vacía.
     """
+    if not  request.user.is_authenticated:
+        return []
+    user_favs = repositories.getAllFavourites(request.user) # buscamos los favoritos en el repo
+
+    favourite_list = [] # lista vacia para almacenar las cards
+    for fav in user_favs: # recorremos los favs del usuario
+        favourite_list.append(translator.fromRepositoryIntoCard(fav)) # agregamos la card a la lista
+        print(user_favs)
+    return favourite_list #retornamos la lista con las cards
+
     pass
 
 def deleteFavourite(request):
@@ -82,5 +96,9 @@ def deleteFavourite(request):
     Se debe obtener el ID del favorito desde el POST y eliminarlo desde el repositorio.
     """
 
+    favId = request.POST.get('id') # obtenemos el id 
+    print(f"Intentando borrar favorito con ID: {favId}") # Esto saldrá en tu terminal
+    return repositories.deleteFavourite(favId)
+    #return repositories.deleteFavourite(favId) # se elimina desde el repo 
 
     pass

@@ -38,15 +38,15 @@ def fromTemplateIntoCard(templ):
 
 
 # Cuando la información viene de la base de datos, para transformarla en una Card antes de mostrarla.
-def fromRepositoryIntoCard(repo_dict):
+def fromRepositoryIntoCard(repo_obj):
     card = Card(
-        id=repo_dict.get('id'),
-        name=repo_dict.get('name'),
-        gender=repo_dict.get('gender'),
-        status=repo_dict.get('status'),
-        phrases=repo_dict.get('phrases', ''),
-        occupation=repo_dict.get('occupation'),
-        image=repo_dict.get('image'),
-        age=repo_dict.get('age')
+        id=repo_obj.id,
+        name=repo_obj.name,
+        gender=repo_obj.gender,
+        status=repo_obj.status,
+        phrases=repo_obj.phrases if repo_obj.phrases else '',
+        occupation=repo_obj.occupation,
+        image=repo_obj.image,
+        age=repo_obj.age
     )
     return card

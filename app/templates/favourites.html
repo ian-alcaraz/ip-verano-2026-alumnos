@@ -22,18 +22,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for favourite in favourite_list %}
+                    {% for fav in favourite_list %}
                     <tr>
                         <td>-</td>
-                        <td><img src="{{ favourite.image }}" alt="" style="max-width: 200px; max-height: 200px;"></td>
-                        <td>{{ favourite.name }}</td>
-                        <td>{{ favourite.gender }}</td>
-                        <td>{{ favourite.status }}</td>
-                        <td>{{ favourite.occupation }}</td>
+                        <!---<td><img src="{{ fav.image }}" alt="" style="max-width: 200px; max-height: 200px;"></td>
+                        <td><img src="{{ fav.image }}" alt="{{fav.name}}" style="width: 80px;" class="rounded"></td> --->
+                        <td><img src="{{ fav.image }}" alt="{{ fav.name }}" 
+                        style="width: 70px; height: 70px; object-fit: cover;" 
+                        class="rounded-circle border"></td>
+                        <td>{{ fav.name }}</td>
+                        <td>{{ fav.gender }}</td>
+                        <td>{{ fav.status }}</td>
+                        <td>{{ fav.occupation }}</td>
                         <td>
                             <form method="post" action="{% url 'borrar-favorito' %}">
                                 {% csrf_token %}
-                                <input type="hidden" name="id" value="{{ favourite.id }}">
+                                <input type="hidden" name="id" value="{{ fav.id }}">
                                 <button type="submit" class="btn" style="color:red"><i class="material-icons">&#xE872;</i></button>
                             </form>
                         </td>

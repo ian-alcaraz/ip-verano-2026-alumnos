@@ -15,7 +15,8 @@ urlpatterns = [
     path('favourites/add/', views.saveFavourite, name='agregar-favorito'),
     path('favourites/delete/', views.deleteFavourite, name='borrar-favorito'),
 
-    path('register/', views.registrar_usuario, name ='register'),
+    path('register/', views.registrar_usuario, name ='register'), 
+    
 
     path('exit/', views.exit, name='exit'),
 ]

@@ -103,7 +103,7 @@
                                 <input type="hidden" name="age" value="{{ img.age }}">
                                 <input type="hidden" name="image" value="{{ img.image }}">
 
-                                {% if img in favourite_list %}
+                                {% if img.name in favourite_list %}
                                 <button type="submit" class="btn btn-primary btn-sm" disabled>
                                     ✔️ Favoritos
                                 </button>

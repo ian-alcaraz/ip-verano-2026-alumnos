@@ -18,9 +18,11 @@ def getAllFavourites(user):
     """
     Obtiene todos los favoritos de un usuario desde la base de datos.
     """
+    return Favourite.objects.filter(user=user) #filtramos la tabla por el usuario que inicio sesion 
     pass
 
 def deleteFavourite(favId):
-    favourite = Favourite.objects.get(id=favId)
-    favourite.delete()
+    #Favourite.objects.filter(id=favId).delete()
+    #return True
+    Favourite.objects.filter(id=favId).delete()
     return True
